@@ -1,5 +1,3 @@
-# chains/pipeline.py
-
 from chains.educational_retriever import educational_chain
 from chains.adaptive_conversation import conversation_chain
 from chains.content_generator import generator_chain
