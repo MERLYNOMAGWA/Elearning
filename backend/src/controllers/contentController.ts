@@ -75,7 +75,38 @@ export const uploadDocument = async (req: Request, res: Response) => {
   }
 };
 
-// Get content and deleteContent controllers remain unchanged
+// Get all content
+export const getAllContent = async (req: Request, res: Response) => {
+  try {
+    console.log("Get all content request");
+    const content = await Content.find({}).sort({ uploadDate: -1 }); // Most recent first
+
+    res.json({
+      success: true,
+      count: content.length,
+      content: content.map(item => ({
+        id: item._id,
+        title: item.title,
+        description: item.description,
+        url: item.fileUrl,
+        uploadDate: item.uploadDate,
+        contentType: item.contentType,
+      }))
+    });
+  } catch (error) {
+    console.error("Error fetching all content:", error);
+
+    let errorMessage = "Error fetching content";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+
+    res.status(500).json({ 
+      success: false,
+      message: errorMessage 
+    });
+  }
+};
 
 // Get content by ID
 export const getContent = async (req: Request, res: Response) => {
