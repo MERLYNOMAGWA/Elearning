@@ -1,0 +1,24 @@
+{
+  "info": {
+    "name": "Directed Educational Assistant - Postman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Chat - sample",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\\n  \\\"user_type\\\": \\\"student\\\",\\n  \\\"request_type\\\": \\\"tutoring\\\",\\n  \\\"input\\\": \\\"Explain supervised learning\\\"\\n}"
+        }
+      }
+    }
+  ]
+}
