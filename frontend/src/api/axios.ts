@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:3500/api", // 🔹 Change to your backend URL
+  baseURL: "https://elearning-2-2qs2.onrender.com/api", // 🔹 Updated to deployed API URL
   headers: {
     "Content-Type": "application/json",
   },

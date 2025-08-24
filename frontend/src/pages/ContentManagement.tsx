@@ -1,15 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Upload, Play, Pause, FileText, Image, Video, Trash2, Eye, Download } from 'lucide-react';
-import {type ReactNode} from 'react'
+import { Upload, Play, Pause, FileText, Image, Video, Trash2, Eye, Download, Loader2 } from 'lucide-react';
+import { type ReactNode } from 'react';
+import { uploadDocument, deleteContent } from '../services/contentApi';
 
 interface FileData {
-  id: number;
-  file: File;
+  id: string;
   name: string;
   size: number;
   type: string;
   uploadDate: string;
   url: string;
+  description?: string;
 }
 
 interface VideoProgress {
@@ -24,22 +25,60 @@ const ContentManagementSystem: React.FC = () => {
   const [files, setFiles] = useState<FileData[]>([]);
   const [selectedFile, setSelectedFile] = useState<FileData | null>(null);
   const [dragActive, setDragActive] = useState<boolean>(false);
-  const [videoProgress, setVideoProgress] = useState<Record<number, VideoProgress>>({});
+  const [videoProgress, setVideoProgress] = useState<Record<string, VideoProgress>>({});
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [error, setError] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
+  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
 
-  // Handle file selection
-  const handleFileSelect = (selectedFiles: FileList): void => {
-    const newFiles: FileData[] = Array.from(selectedFiles).map(file => ({
-      id: Date.now() + Math.random(),
-      file,
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      uploadDate: new Date().toLocaleDateString(),
-      url: URL.createObjectURL(file)
-    }));
-    setFiles(prev => [...prev, ...newFiles]);
+  // Load existing content on component mount
+  useEffect(() => {
+    // TODO: Add API call to load existing content
+    // For now, we'll start with empty state
+  }, []);
+
+  // Handle file selection and upload
+  const handleFileSelect = async (selectedFiles: FileList): Promise<void> => {
+    setIsUploading(true);
+    setError('');
+    setUploadProgress(0);
+
+    try {
+      for (const file of Array.from(selectedFiles)) {
+        // Validate file size (10MB limit)
+        if (file.size > 10 * 1024 * 1024) {
+          throw new Error(`File ${file.name} is too large. Maximum size is 10MB.`);
+        }
+
+        // Simulate upload progress
+        setUploadProgress(25);
+
+        // Upload to backend
+        const response = await uploadDocument(file, file.name);
+        setUploadProgress(75);
+
+        // Add to local state
+        const newFile: FileData = {
+          id: response.content.id,
+          name: response.content.title,
+          size: file.size,
+          type: file.type,
+          uploadDate: response.content.uploadDate,
+          url: response.content.url,
+        };
+
+        setFiles(prev => [...prev, newFile]);
+        setUploadProgress(100);
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Upload failed';
+      setError(errorMessage);
+      console.error('Upload error:', error);
+    } finally {
+      setIsUploading(false);
+      setUploadProgress(0);
+    }
   };
 
   // Drag and drop handlers
@@ -90,7 +129,7 @@ const ContentManagementSystem: React.FC = () => {
   };
 
   // Video progress tracking
-  const handleVideoTimeUpdate = (fileId: number, currentTime: number, duration: number): void => {
+  const handleVideoTimeUpdate = (fileId: string, currentTime: number, duration: number): void => {
     const progress = (currentTime / duration) * 100;
     setVideoProgress(prev => ({
       ...prev,
@@ -99,10 +138,16 @@ const ContentManagementSystem: React.FC = () => {
   };
 
   // Delete file
-  const deleteFile = (fileId: number): void => {
-    setFiles(prev => prev.filter(f => f.id !== fileId));
-    if (selectedFile && selectedFile.id === fileId) {
-      setSelectedFile(null);
+  const deleteFile = async (fileId: string): Promise<void> => {
+    try {
+      await deleteContent(fileId);
+      setFiles(prev => prev.filter(f => f.id !== fileId));
+      if (selectedFile && selectedFile.id === fileId) {
+        setSelectedFile(null);
+      }
+    } catch (error) {
+      console.error('Delete error:', error);
+      setError('Failed to delete file.');
     }
   };
 
@@ -151,7 +196,7 @@ const ContentManagementSystem: React.FC = () => {
           <source src={file.url} type={file.type} />
           Your browser does not support the video tag.
         </video>
-        
+
         {videoProgress[file.id] && (
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
             <div className="flex items-center gap-2 text-white text-sm">
@@ -159,7 +204,7 @@ const ContentManagementSystem: React.FC = () => {
                 {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               </button>
               <div className="flex-1 bg-white/30 rounded-full h-2">
-                <div 
+                <div
                   className="bg-blue-500 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${videoProgress[file.id].progress || 0}%` }}
                 />
@@ -177,8 +222,8 @@ const ContentManagementSystem: React.FC = () => {
   // Image Preview Component
   const ImagePreview: React.FC<{ file: FileData }> = ({ file }) => (
     <div className="flex justify-center bg-gray-100 rounded-lg p-4">
-      <img 
-        src={file.url} 
+      <img
+        src={file.url}
         alt={file.name}
         className="max-w-full max-h-96 object-contain rounded-lg shadow-md"
       />
@@ -192,16 +237,16 @@ const ContentManagementSystem: React.FC = () => {
       <h3 className="text-lg font-semibold mb-2">{file.name}</h3>
       <p className="text-gray-600 mb-4">PDF Document ({formatFileSize(file.size)})</p>
       <div className="flex gap-3 justify-center">
-        <a 
-          href={file.url} 
-          target="_blank" 
+        <a
+          href={file.url}
+          target="_blank"
           rel="noopener noreferrer"
           className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center gap-2"
         >
           <Eye className="w-4 h-4" />
           View PDF
         </a>
-        <a 
+        <a
           href={file.url}
           download={file.name}
           className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 flex items-center gap-2"
@@ -216,7 +261,7 @@ const ContentManagementSystem: React.FC = () => {
   // Content Preview Component
   const ContentPreview: React.FC<{ file: FileData }> = ({ file }) => {
     const fileType: FileType = getFileType(file.type);
-    
+
     switch (fileType) {
       case 'video':
         return <VideoPlayer file={file} />;
@@ -245,7 +290,7 @@ const ContentManagementSystem: React.FC = () => {
     fileInputRef.current?.click();
   };
 
-  const handleDeleteClick = (e: React.MouseEvent, fileId: number): void => {
+  const handleDeleteClick = (e: React.MouseEvent, fileId: string): void => {
     e.stopPropagation();
     deleteFile(fileId);
   };
@@ -254,18 +299,17 @@ const ContentManagementSystem: React.FC = () => {
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Content Management System</h1>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* File Upload Section */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-lg p-6">
               <h2 className="text-xl font-semibold mb-4">Upload Course Materials</h2>
-              
+
               {/* Upload Area */}
               <div
-                className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                  dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
-                }`}
+                className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
+                  }`}
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
                 onDragOver={handleDrag}
@@ -280,13 +324,42 @@ const ContentManagementSystem: React.FC = () => {
                   accept="video/*,image/*,.pdf,.doc,.docx,.txt"
                   onChange={handleFileInputChange}
                   className="hidden"
+                  disabled={isUploading}
                 />
                 <button
                   onClick={handleUploadClick}
-                  className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                  disabled={isUploading}
+                  className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Choose Files
+                  {isUploading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 inline animate-spin mr-2" />
+                      Uploading...
+                    </>
+                  ) : (
+                    'Choose Files'
+                  )}
                 </button>
+
+                {/* Upload Progress */}
+                {isUploading && uploadProgress > 0 && (
+                  <div className="mt-4">
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${uploadProgress}%` }}
+                      />
+                    </div>
+                    <p className="text-sm text-gray-600 mt-2">{uploadProgress}% Complete</p>
+                  </div>
+                )}
+
+                {/* Error Display */}
+                {error && (
+                  <div className="mt-4 p-3 bg-red-100 border border-red-300 rounded-lg">
+                    <p className="text-red-700 text-sm">{error}</p>
+                  </div>
+                )}
               </div>
 
               {/* File List */}
@@ -296,9 +369,8 @@ const ContentManagementSystem: React.FC = () => {
                   {files.map((file: FileData) => (
                     <div
                       key={file.id}
-                      className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                        selectedFile?.id === file.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
-                      }`}
+                      className={`p-3 border rounded-lg cursor-pointer transition-colors ${selectedFile?.id === file.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
+                        }`}
                       onClick={() => setSelectedFile(file)}
                     >
                       <div className="flex items-center justify-between">
@@ -332,7 +404,7 @@ const ContentManagementSystem: React.FC = () => {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl shadow-lg p-6">
               <h2 className="text-xl font-semibold mb-4">Content Preview</h2>
-              
+
               {selectedFile ? (
                 <div>
                   <div className="mb-6">
@@ -343,7 +415,7 @@ const ContentManagementSystem: React.FC = () => {
                       <span>Uploaded: {selectedFile.uploadDate}</span>
                     </div>
                   </div>
-                  
+
                   <ContentPreview file={selectedFile} />
                 </div>
               ) : (

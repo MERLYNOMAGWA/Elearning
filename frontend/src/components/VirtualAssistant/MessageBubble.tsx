@@ -1,8 +1,8 @@
 import React from "react";
-import { type ChatMessage } from "../../shared/chatTypes";
+import { type DisplayMessage } from "../../shared/chatTypes";
 
 interface MessageBubbleProps {
-  msg: ChatMessage;
+  msg: DisplayMessage;
 }
 
 export const MessageBubble: React.FC<MessageBubbleProps> = ({ msg }) => {
@@ -15,11 +15,10 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ msg }) => {
           </div>
         )}
         <div
-          className={`px-4 py-3 rounded-2xl shadow-sm ${
-            msg.sender === 'user'
+          className={`px-4 py-3 rounded-2xl shadow-sm ${msg.sender === 'user'
               ? 'bg-gray-300 text-gray-800'
               : 'bg-white text-gray-800 border border-gray-200'
-          }`}
+            }`}
         >
           <p className="text-sm leading-relaxed">{msg.text}</p>
         </div>
