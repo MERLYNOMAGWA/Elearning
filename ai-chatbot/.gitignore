@@ -1,4 +1,6 @@
-env/
-.env
 __pycache__/
-.vscode/
+.venv/
+.env
+chroma_db/
+logs/
+*.pyc
