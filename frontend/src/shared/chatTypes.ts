@@ -1,7 +1,7 @@
 export interface ChatMessage {
-  id: string;
-  sender: "user" | "assistant";
-  text: string;
+  id?: string; // Optional for frontend display
+  role: "user" | "assistant" | "system";
+  content: string;
   timestamp: string;
 }
 
@@ -11,14 +11,27 @@ export interface ChatContext {
   lessonId?: string;
 }
 
-export interface ChatRequest {
-  message: string;
-  context: ChatContext;
+// Match backend types exactly
+export interface MessageRequest {
   sessionId: string;
+  message: string;
 }
 
-export interface ChatResponse {
+export interface MessageResponse {
   sessionId: string;
-  reply: ChatMessage;
-  history?: ChatMessage[];
+  reply: string;
+  context: ChatMessage[];
+}
+
+export interface HistoryResponse {
+  sessionId: string;
+  history: ChatMessage[];
+}
+
+// Frontend-specific types for display
+export interface DisplayMessage {
+  id: string;
+  sender: "user" | "assistant";
+  text: string;
+  timestamp: string;
 }
