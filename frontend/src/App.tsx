@@ -15,9 +15,10 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/instructor/Dashboard";
 import Courses from "./pages/instructor/Courses";
 import CourseForm from "./pages/instructor/CourseForm";
-import {VirtualAssistant} from './components/VirtualAssistant/VirtualAssistant';
-import ContentManagement from './pages/ContentManagement'
-import CourseCatalogSystem from './pages/CoursesCat'
+import { VirtualAssistant } from './components/VirtualAssistant/VirtualAssistant';
+import ContentManagement from './pages/ContentManagement';
+import CourseCatalogSystem from './pages/CoursesCat';
+import StudentDashboard from "./pages/StudentDashboard";
 
 function App() {
   return (
@@ -25,8 +26,17 @@ function App() {
       <QuizProvider>
         <Routes>
 
+          {/* Student Dashboard */}
+          <Route
+            path="/dashboard"
+            element={
+              <Layout>
+                <StudentDashboard />
+              </Layout>
+            }
+          />
 
-  
+          {/* Instructor Dashboard */}
           <Route
             path="/instructor/dashboard"
             element={
@@ -37,6 +47,7 @@ function App() {
               </AuthProvider>
             }
           />
+
           <Route 
             path="/instructor/courses" 
             element={
@@ -47,6 +58,7 @@ function App() {
               </AuthProvider>
             } 
           />
+
           <Route 
             path="/instructor/courses/new" 
             element={
@@ -68,40 +80,30 @@ function App() {
               </AuthProvider>
             } 
           />
+
           {/* Auth routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/reset-password" element={<ChangePassword />} />
-          <Route path="/content" element={< ContentManagement/>} />
+          <Route path="/content" element={<ContentManagement />} />
 
           <Route
             path="/quiz/:lessonId"
-            element={
-              <QuizPage />
-                 }
+            element={<QuizPage />}
           />
 
           {/* Instructor Quiz Management */}
           <Route
             path="/quiz"
-            element={
-        <CreateQuizPage />
-                            
-            }
+            element={<CreateQuizPage />}
           />
           <Route
             path="/view-quiz/:lessonId"
-            element={
-           <ViewQuizPage />
-               
-            }
+            element={<ViewQuizPage />}
           />
           <Route
             path="/courses"
-            element={
-           <CourseCatalogSystem />
-               
-            }
+            element={<CourseCatalogSystem />}
           />
 
           {/* Lesson route */}
@@ -140,21 +142,15 @@ function App() {
               </Layout>
             }
           />
+
           <Route path="/profile" element={<Profile />} />
 
-           <Route
+          <Route
             path="/assistant"
             element={
               <VirtualAssistant context={{ page: "GeneralHelp" }} />
-               
             }
           />
-
-
-
-
-
-
 
         </Routes>
       </QuizProvider>
