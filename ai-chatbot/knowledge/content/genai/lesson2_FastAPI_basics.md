@@ -1,4 +1,18 @@
+---
+subject: GenAI
+level: Beginner
+type: Lesson
+title: FastAPI Basics
+learning_objectives:
+  - Install and run FastAPI
+  - Define API routes
+  - Use request and response models
+  - Run API server locally
+tags: [fastapi, backend, fullstack, apis]
+---
+
 # **Section Seven: FastAPI Basics**
+
 ---
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/a953852c-d342-4227-95cb-26bc2e5e8e56/207cfd0f-71d6-4c86-b433-a140699becfb/Untitled.png)
@@ -23,7 +37,7 @@ You’ll build your own API and unlock the power to make apps talk, no magic, ju
 
 When you open your pizza app and tap your favorite topping, you’re not talking directly to the kitchen. Instead, your order goes through a “waiter” the API. The waiter understands both you and the kitchen and makes sure the message gets through correctly.
 
-In technical terms, **API** stands for *Application Programming Interface,* but all you need to remember is that it’s a set of rules for how two programs can communicate. One app asks for something, the API delivers the request, and brings back a response. It’s just like ordering at a restaurant:
+In technical terms, **API** stands for _Application Programming Interface,_ but all you need to remember is that it’s a set of rules for how two programs can communicate. One app asks for something, the API delivers the request, and brings back a response. It’s just like ordering at a restaurant:
 
 - **You** ask for food (the client’s request).
 - The **waiter** delivers your order to the kitchen (the API in action).
@@ -40,15 +54,12 @@ In technical terms, **API** stands for *Application Programming Interface,* but 
 So every time your app wants something from pizza toppings to the latest weather update, it sends a request through an API. The API returns exactly what your app needs, in a format both sides understand. The most common “language” these APIs use is something called **JSON,** which looks a lot like a Python dictionary.
 
 > For example:
-> 
-> 
+>
 > `{ "topping": "mushrooms", "size": "large" }`
-> 
 
 ## 💡 Topic: What is FastAPI?
 
-> So now you know what an API is. But how do you *build* one? That’s where **FastAPI** shines.
-> 
+> So now you know what an API is. But how do you _build_ one? That’s where **FastAPI** shines.
 
 FastAPI is a modern tool for making APIs in Python. It’s designed to make your life easier, whether you’re brand new to web programming or building something big. Here’s why developers (including total beginners) love FastAPI:
 
@@ -89,7 +100,7 @@ When you interact with an API, you’re always part of a two-way street:
 - **Request:** You send the details of what you want, maybe it’s “I want a pepperoni pizza, size large.”
 - **Response:** The API sends something backmaybe a confirmation, a receipt, or a list of all available toppings.
 
-The API always replies in a predictable format, most often JSON, which is easy for computers *and* humans to read.
+The API always replies in a predictable format, most often JSON, which is easy for computers _and_ humans to read.
 
 **4. JSON: The Common Language**
 
@@ -125,12 +136,12 @@ When you run your FastAPI app, you can open `/docs` in your browser. There you�
 
 ### 🛒 **Putting It All Together: The Pizza Shop in API Terms**
 
-| Real-World Action | API Endpoint | HTTP Method | What You Send | What You Get Back |
-| --- | --- | --- | --- | --- |
-| See menu | `/menu` | GET | nothing | toppings, sizes |
-| Place order | `/order` | POST | pizza details | confirmation |
-| List all orders | `/orders` | GET | nothing | list of orders |
-| Cancel an order | `/order/{id}` | DELETE | order id | cancellation |
+| Real-World Action | API Endpoint  | HTTP Method | What You Send | What You Get Back |
+| ----------------- | ------------- | ----------- | ------------- | ----------------- |
+| See menu          | `/menu`       | GET         | nothing       | toppings, sizes   |
+| Place order       | `/order`      | POST        | pizza details | confirmation      |
+| List all orders   | `/orders`     | GET         | nothing       | list of orders    |
+| Cancel an order   | `/order/{id}` | DELETE      | order id      | cancellation      |
 
 ### ✍️ **Reflection**
 
@@ -141,45 +152,40 @@ Once done, answer the following questions inside your notes:
 
 ## 📋 Instructions
 
-1. **Step one:** Take the following course in Pydantic 👇 (interactive lesson, not a quiz 😉) 
+1. **Step one:** Take the following course in Pydantic 👇 (interactive lesson, not a quiz 😉)
 
 https://quizizz.com/join?gc=19225964
 
 1. **Step Two:** Take the following quick starter course in Fast API
-    
-    https://youtu.be/iWS9ogMPOI0
-    
 
-1. **Step 3:** Take the following  crash course in Fast API 
-    
-    https://youtu.be/rvFsGRvj9jo
-    
+   https://youtu.be/iWS9ogMPOI0
 
-1. **Step 4:** Take the following crash course in deploying a backend ( An API) on Vercel. 
-    
-    https://youtu.be/8R-cetf_sZ4
-    
-    <aside>
-    ⛔
-    
-    **Note: You are required to go through all the content found in this section before moving on to the next**
-    
-    </aside>
-    
+1. **Step 3:** Take the following crash course in Fast API
+
+   https://youtu.be/rvFsGRvj9jo
+
+1. **Step 4:** Take the following crash course in deploying a backend ( An API) on Vercel.
+
+   https://youtu.be/8R-cetf_sZ4
+
+   <aside>
+   ⛔
+
+   **Note: You are required to go through all the content found in this section before moving on to the next**
+
+   </aside>
 
 ## **🧠 Exercise / Project**
 
 1. Please visit this page to access the project for this section 👇
-    
-    [Project: Build a Task Tracker backend with FastAPI](https://www.notion.so/Project-Build-a-Task-Tracker-backend-with-FastAPI-21352c038379818d8693e4f41f961681?pvs=21)
-    
+
+   [Project: Build a Task Tracker backend with FastAPI](https://www.notion.so/Project-Build-a-Task-Tracker-backend-with-FastAPI-21352c038379818d8693e4f41f961681?pvs=21)
 
 ## :icons8_people_256:Peer Review Activity
 
 1. After completing the Exercise found above, head over to the peer review link below 👇 and give helpful feedback to your classmates and receive some too!
-    
-    [Peer Review Activity: Task Tracker API with FastAPI](https://www.notion.so/Peer-Review-Activity-Task-Tracker-API-with-FastAPI-21352c038379818ab43be0bbbfbd9d21?pvs=21)
-    
+
+   [Peer Review Activity: Task Tracker API with FastAPI](https://www.notion.so/Peer-Review-Activity-Task-Tracker-API-with-FastAPI-21352c038379818ab43be0bbbfbd9d21?pvs=21)
 
 ## 📚 Additional Resources
 
@@ -193,10 +199,8 @@ https://quizizz.com/join?gc=19225964
 
 ![This will be you soon 😎 ](attachment:0b759377-46c6-42e2-9ac3-46632270f4d9:image.png)
 
-This will be you soon 😎 
+This will be you soon 😎
 
-[How API work !   #funny #memes.mp4](attachment:8d781ce3-24fe-4620-b7e5-a31038d539d9:How_API_work_!___funny_memes.mp4)
-
-      
+[How API work ! #funny #memes.mp4](attachment:8d781ce3-24fe-4620-b7e5-a31038d539d9:How_API_work_!___funny_memes.mp4)
 
 ---

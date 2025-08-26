@@ -1,3 +1,16 @@
+---
+subject: Fullstack
+level: Beginner
+type: Lesson
+title: Introduction To JavaScript
+learning_objectives:
+  - Understand what JavaScript is used for
+  - Learn variables, data types, and operators
+  - Write simple functions
+  - Explore browser console debugging
+tags: [javascript, programming, fullstack, basics]
+---
+
 ## Section Six: Introduction To JavaScript
 
 So far, you’ve raised the castle walls with HTML and painted them beautifully using CSS. But right now, your castle is just a display, no guards open the gate, no torches flicker when someone enters, no scrolls deliver secret messages to the king.

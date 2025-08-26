@@ -1,3 +1,15 @@
+---
+subject: UI/UX
+level: Beginner
+type: Lesson
+title: The Six Design Stages
+learning_objectives:
+  - Understand the stages of the design process
+  - Learn how each stage builds on the previous one
+  - Apply design thinking to simple projects
+tags: [uiux, design-process, foundations, creativity]
+---
+
 # **The six design stages**
 
 ---

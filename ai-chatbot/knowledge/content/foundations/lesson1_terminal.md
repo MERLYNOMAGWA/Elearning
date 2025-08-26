@@ -1,3 +1,16 @@
+---
+subject: Foundations
+level: Beginner
+type: Lesson
+title: Terminal For Beginners
+learning_objectives:
+  - Understand what a terminal is
+  - Learn basic navigation commands (cd, ls, pwd)
+  - Manage files and directories (mkdir, rm, touch)
+  - Gain confidence in using the command line
+tags: [terminal, shell, foundations, navigation]
+---
+
 # Section Six: Terminal For Beginners
 
 ### 👋 Welcome!

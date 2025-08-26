@@ -1,3 +1,16 @@
+---
+subject: Foundations
+level: Beginner
+type: Lesson
+title: Self-Directed Learning and Time Management
+learning_objectives:
+  - Learn strategies for self-directed study
+  - Apply time-blocking techniques
+  - Set realistic learning goals
+  - Build effective study habits
+tags: [learning, productivity, foundations, time-management]
+---
+
 # **Section Three: Self-Directed Learning and Time Management**
 
 ---

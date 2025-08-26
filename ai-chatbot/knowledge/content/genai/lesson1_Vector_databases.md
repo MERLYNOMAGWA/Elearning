@@ -1,3 +1,16 @@
+---
+subject: GenAI
+level: Intermediate
+type: Lesson
+title: Data Management & Vector Databases
+learning_objectives:
+  - Understand vector embeddings
+  - Explore vector databases like Chroma
+  - Perform semantic similarity search
+  - Discuss use cases in AI assistants
+tags: [genai, vector-databases, data-management, ai]
+---
+
 # **Section Two: Data management & vector databases**
 
 ---
@@ -40,13 +53,13 @@ Before the AI era, most information lived in _classic databases,_ think of them 
   **Strengths:**
   - Super-fast for exact lookups (names, IDs, dates)
   - Great for bank records, grades, inventory, etc.
-  **Limits:**
+    **Limits:**
   - Struggles with “fuzzy” searches:
     _What if you forgot the spelling?_
     _Or want things that are similar, but not identical?_
-  **Quick Scenario:**
-  If you type “Sara” instead of “Sarah,” you might get no results.
-  If you search for “kitten” but your data only says “cat,” you’ll come up empty-handed.
+    **Quick Scenario:**
+    If you type “Sara” instead of “Sarah,” you might get no results.
+    If you search for “kitten” but your data only says “cat,” you’ll come up empty-handed.
 
 ### **Vector Databases: Search by Meaning, Not Just Words**
 
@@ -63,6 +76,7 @@ Before the AI era, most information lived in _classic databases,_ think of them 
 - **What does a vector database do?**
   It stores all your data as vectors. When you search, it looks for the data whose vectors are “closest” to your search, finding _similar_ things, not just _identical_ ones.
 - **How Does This Work Under the Hood?**
+
   1. **Encoding:**
 
      An AI model turns every item (photo, sentence, sound) into a unique vector—a digital fingerprint.
@@ -74,10 +88,12 @@ Before the AI era, most information lived in _classic databases,_ think of them 
   3. **Searching:**
 
      When you search, your query is encoded into a vector, too. The database returns items whose vectors are _closest_ to yours, measured by mathematical “distance.”
-  **Examples:**
+     **Examples:**
+
   - Google Images: Search for “dog in a hat,” get visually similar pics
   - Spotify: Find songs that _sound like_ your favorite
   - Chatbots: Suggest answers similar to your question, even if you phrase it differently
+
 - **Why Vector Databases Are Changing Everything**
   **In 2025, AI is everywhere:**
   - Your favorite apps use vectors to power search, recommend videos, filter spam, translate text, and so much more.

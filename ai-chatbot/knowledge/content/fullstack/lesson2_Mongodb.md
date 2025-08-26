@@ -1,3 +1,16 @@
+---
+subject: Fullstack
+level: Intermediate
+type: Lesson
+title: Non-Relational Databases with MongoDB
+learning_objectives:
+  - Differentiate relational and non-relational databases
+  - Install and run MongoDB
+  - Perform CRUD operations
+  - Design simple schemas
+tags: [mongodb, database, no-sql, fullstack]
+---
+
 # **Section Three: Non-Relational Databases with MongoDB**
 
 ![MongoDB_ForestGreen.png](attachment:02711867-a60b-4ff8-8ab3-5bcfc8f33529:MongoDB_ForestGreen.png)
@@ -101,8 +114,8 @@ To put it in our castle analogy, MongoDB is like a modular castle that can easil
   - [ ] Complete MongoDB Tutorial #23 - Pagination
   - [ ] Complete MongoDB Tutorial #24 - Indexes
   - [ ] Complete MongoDB Tutorial #25 - MongoDB Atlas
-  💡 Remember! You can use Piazza to ask questions.
-  **Note:**
+        💡 Remember! You can use Piazza to ask questions.
+        **Note:**
   - **You are required to complete ALL THE LESSONS mentioned above before moving on to the next section!**
 
 ⚠️ **YOU MUST USE GIT AND GITHUB THROUGHOUT THE COURSE AND WHEN BUILDING THE PROJECT! MAKE SURE YOU MAKE FREQUENT COMMITS AS YOU GO!**
@@ -131,3 +144,7 @@ During the course, you’ll build a mini project. Once you’re done, head over 
 ![image.png](attachment:59183752-5425-4e76-a89a-ba6baa6e8245:image.png)
 
 ---
+
+```
+
+```

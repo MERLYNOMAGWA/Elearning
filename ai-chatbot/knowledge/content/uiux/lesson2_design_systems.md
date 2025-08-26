@@ -1,3 +1,16 @@
+---
+subject: UI/UX
+level: Intermediate
+type: Lesson
+title: Design Systems
+learning_objectives:
+  - Define design systems
+  - Understand components, patterns, and styles
+  - Explore benefits of consistency in UI
+  - Apply design systems in real projects
+tags: [uiux, design-systems, components, style]
+---
+
 # **design systems**
 
 ---
